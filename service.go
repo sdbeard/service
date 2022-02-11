@@ -18,7 +18,7 @@
 //	import (
 //		"log"
 //
-//		"github.com/kardianos/service"
+//		"github.com/sdbeard/service"
 //	)
 //
 //	var logger service.Logger
@@ -59,7 +59,7 @@
 //			logger.Error(err)
 //		}
 //	}
-package service // import "github.com/kardianos/service"
+package service // import "github.com/sdbeard/service"
 
 import (
 	"errors"
@@ -108,15 +108,15 @@ const (
 
 // Config provides the setup for a Service. The Name field is required.
 type Config struct {
-	Name        string   // Required name of the service. No spaces suggested.
-	DisplayName string   // Display name, spaces allowed.
-	Description string   // Long description of service.
-	UserName    string   // Run as username.
-	Arguments   []string // Run with arguments.
+	Name        string   `yaml:"Name"`        // Required name of the service. No spaces suggested.
+	DisplayName string   `yaml:"DisplayName"` // Display name, spaces allowed.
+	Description string   `yaml:"Description"` // Long description of service.
+	UserName    string   `yaml:"UserName"`    // Run as username.
+	Arguments   []string `yaml:"Arguments"`   // Run with arguments.
 
 	// Optional field to specify the executable for service.
 	// If empty the current executable is used.
-	Executable string
+	Executable string `yaml:"Executable"`
 
 	// Array of service dependencies.
 	// Not yet fully implemented on Linux or OS X:
@@ -126,14 +126,14 @@ type Config struct {
 	//     "Requires=syslog.target"
 	//     Note, such lines will be directly appended into the [Unit] of
 	//     the generated service config file, will not check their correctness.
-	Dependencies []string
+	Dependencies []string `yaml:"Dependencies"`
 
 	// The following fields are not supported on Windows.
-	WorkingDirectory string // Initial working directory.
-	ChRoot           string
+	WorkingDirectory string `yaml:"WorkingDirectory"` // Initial working directory.
+	ChRoot           string `yaml:"ChRoot"`
 
 	// System specific options.
-	Option KeyValue
+	Option KeyValue `yaml:"KeyValue"`
 }
 
 var (
